@@ -1,0 +1,26 @@
+@import "tailwindcss";
+@import "flowbite-react/plugin/tailwindcss";
+@source "../.flowbite-react/class-list.json";
+
+@theme{
+
+    --color-primary-Blue: var(--primary1);
+    --color-secondary-gray-700: var(--secondary-text);
+    --color-secondary-title: var(--secondary-title);
+    --color-accent-text: var(--accent-text);
+    --color-background: var(--background);
+    --color-bgCard: var(--bgcard);
+    --color-bgEggColor: var(--bgEggColor);
+
+}
+    :root{
+
+    --primary1: #006492;
+    --secondary-text:#3F4850;
+    --secondary-title: #181C20;
+    --accent-text:#f2f2f2;
+    --background: #F6F9FF;
+    --bgCard: #EBEEF4;
+    --bgEggColor: #EDDDC9;
+
+}
