@@ -2,8 +2,8 @@ import room1 from "../../assets/homeImg/room1.jpg";
 import room2 from "../../assets/homeImg/room2.jpg";
 import room3 from "../../assets/booking/room3.jpg";
 import room4 from "../../assets/booking/room4.jpg";
-// import room5 from "../../assets/booking/room5.jpg";
-// import room6 from "../../assets/homeImg/room3.jpg";
+import room5 from "../../assets/booking/room5.jpg";
+import room6 from "../../assets/homeImg/room3.jpg";
 // import { IoIosWifi } from "react-icons/io";
 // import { MdOutlinePool } from "react-icons/md";
 
@@ -126,34 +126,93 @@ export const cardData = [
     },
 
     {
-        id: 4,
-        title: "Royal Azure Villa",
-        category: "Villa",
+    id: 4,
+    title: "Sunset Horizon Suite",
+    category: "Suite",
 
-        image: room4,
-        // gallery: [room3, room3Small1, room3Small2],
-        gallery: [room4, room4, room4],
+    image: room4,
+    gallery: [room4, room4, room4],
 
-        price: 680,
-        rating: 4.9,
-        reviews: 58,
+    price: 620,
+    rating: 4.8,
+    reviews: 36,
 
-        size: "200 sqm",
-        bed: "Super King Size",
-        guests: "4 Adults",
-        view: "Beach Front",
+    size: "130 sqm",
+    bed: "King Size",
+    guests: "2 Adults",
+    view: "Ocean Sunset",
 
-        wifi: true,
-        pool: true,
+    wifi: true,
+    pool: true,
 
-        description:
-            "The Royal Azure Villa offers complete privacy, direct beach access, a private swimming pool, spacious living areas, and personal resort service.",
+    description:
+        "Enjoy breathtaking sunset views from your private balcony. The Sunset Horizon Suite combines elegant interiors with luxurious comfort, perfect for couples seeking a romantic escape.",
 
-        amenities: [
-            "Private Infinity Pool",
-            "Direct Beach Access",
-            "Personal Butler Service",
-            "Private Dining Area",
-        ],
-    },
+    amenities: [
+        "Private Balcony",
+        "Jacuzzi Bathtub",
+        "Mini Bar",
+        "Complimentary Breakfast",
+    ],
+},
+{
+    id: 5,
+    title: "Tropical Family Villa",
+    category: "Villa",
+
+    image: room5,
+    gallery: [room5, room5, room5],
+
+    price: 980,
+    rating: 4.9,
+    reviews: 64,
+
+    size: "280 sqm",
+    bed: "2 King Beds",
+    guests: "6 Adults",
+    view: "Private Garden",
+
+    wifi: true,
+    pool: true,
+
+    description:
+        "Designed for families and groups, this spacious villa features two bedrooms, a private swimming pool, outdoor dining space, and lush tropical surroundings.",
+
+    amenities: [
+        "Private Swimming Pool",
+        "Outdoor BBQ Area",
+        "Family Living Room",
+        "24/7 Butler Service",
+    ],
+},
+{
+    id: 6,
+    title: "Emerald Garden Retreat",
+    category: "Garden Room",
+
+    image: room6,
+    gallery: [room6, room6, room6],
+
+    price: 460,
+    rating: 4.8,
+    reviews: 29,
+
+    size: "82 sqm",
+    bed: "Queen Size",
+    guests: "2 Adults",
+    view: "Tropical Garden",
+
+    wifi: true,
+    pool: false,
+
+    description:
+        "Relax in a peaceful garden retreat surrounded by tropical greenery. Featuring contemporary design, a private terrace, and easy access to the resort's wellness facilities.",
+
+    amenities: [
+        "Private Terrace",
+        "Smart TV",
+        "Coffee Machine",
+        "Daily Housekeeping",
+    ],
+},
 ];

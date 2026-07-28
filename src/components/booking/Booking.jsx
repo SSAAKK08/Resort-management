@@ -6,7 +6,7 @@ import { cardData, roomCategories } from "../data/dataBooking";
 import Footer from "../hearder&footer/Footer";
 
 
-function Booking() {
+function Booking(){
 
     // make it default with all room 
     const [selectedCategory, setSelectedCategory] = useState("All Rooms");
