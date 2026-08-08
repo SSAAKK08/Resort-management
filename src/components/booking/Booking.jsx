@@ -1,26 +1,49 @@
-import { useState } from "react";
-import Navbar from "../hearder&footer/Navbar";
+'use client';
+
+import { useEffect, useMemo, useState } from "react";
 import topbanner from "../../assets/booking/TopBanner.jpg";
 import BookingCard from "../cards/BookingCard";
-import { cardData, roomCategories } from "../data/dataBooking";
-import Footer from "../hearder&footer/Footer";
+import { normalizeRoom } from "../../lib/catalog";
+import { useLocale } from "next-intl";
+import BookingCheckoutForm from "./BookingCheckoutForm";
 
 
-function Booking(){
+function Booking({ initialRoomSlug = "", initialPromotionCode = "" }){
+    const locale = useLocale();
 
     // make it default with all room 
     const [selectedCategory, setSelectedCategory] = useState("All Rooms");
+    const [rooms, setRooms] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
+    useEffect(() => {
+        let active = true;
+        fetch("/api/rooms", { cache: "no-store" })
+            .then(async (response) => {
+                const payload = await response.json();
+                if (!response.ok) throw new Error(payload.error || "Unable to load rooms.");
+                if (active) setRooms((payload.data || []).map((item) => normalizeRoom(item, locale)));
+            })
+            .catch((requestError) => {
+                if (active) {
+                    setError(requestError.message);
+                    setRooms([]);
+                }
+            })
+            .finally(() => active && setLoading(false));
+        return () => { active = false; };
+    }, [locale]);
 
+    const categories = useMemo(() => ["All Rooms", ...new Set(rooms.map((room) => room.category).filter(Boolean))], [rooms]);
     const filteredRooms = selectedCategory === "All Rooms"
-        ? cardData
-        : cardData.filter((room) => room.category === selectedCategory);
+        ? rooms
+        : rooms.filter((room) => room.category === selectedCategory);
 
 
     return (
         <div className="min-h-screen bg-white">
 
-            <Navbar/>
 
             <main>
 
@@ -46,7 +69,7 @@ function Booking(){
 
                         <img
                             className="w-full lg:h-[420px] md:h-[350px] h-[260px] object-cover rounded-3xl shadow-lg"
-                            src={topbanner}
+                            src={topbanner.src}
                             alt="Swimming pool at the coastal resort"
                         />
 
@@ -54,13 +77,15 @@ function Booking(){
 
                 </section>
 
+               {/* {!loading && rooms.length > 0 && <BookingCheckoutForm rooms={rooms} initialRoomSlug={initialRoomSlug} initialPromotionCode={initialPromotionCode} />} */}
+
                 <nav className="lg:mx-16 mx-3 mt-10" aria-label="Room categories" >
 
                     <div className="bg-gray-50 border border-gray-200 rounded-2xl px-3 py-3 shadow-sm">
 
                         <ul className="flex items-center gap-3 overflow-x-auto">
 
-                            {roomCategories.map((category) => (
+                            {(rooms.length ? categories : ["All Rooms"]).map((category) => (
 
                                 <li key={category}  className="shrink-0">
 
@@ -89,7 +114,6 @@ function Booking(){
                         </ul>
 
                     </div>
-
                 </nav>
 
                 <section className="lg:mx-8 mx-3 mt-8 mb-16">
@@ -109,7 +133,11 @@ function Booking(){
 
                     </div>
 
-                    {filteredRooms.length > 0 ? (
+                    {error && <p className="mb-5 rounded-xl bg-amber-50 p-4 text-sm text-amber-800" role="status">{error}</p>}
+
+                    {loading ? (
+                        <div className="min-h-60 animate-pulse rounded-2xl bg-gray-100" aria-label="Loading rooms" />
+                    ) : filteredRooms.length > 0 ? (
 
             
 
@@ -118,11 +146,16 @@ function Booking(){
                                 <BookingCard
                                     key={bookMapping.id}
                                     id={bookMapping.id}
+                                    slug={bookMapping.slug}
                                     images={bookMapping.image}
                                     title={bookMapping.title}
                                     price={bookMapping.price}
                                     wifi={bookMapping.wifi}
                                     pool={bookMapping.pool}
+                                    // bookingHref={`/booking?room=${encodeURIComponent(bookMapping.slug)}`}
+                                    bookingHref={`/booking?room=${encodeURIComponent(
+                                    bookMapping.slug || bookMapping.id
+                                )}`}
                                 />
                             ))}
                         </div>
@@ -140,7 +173,7 @@ function Booking(){
                 </section>
             </main>
 
-            <Footer/>
+             {!loading && rooms.length > 0 && <BookingCheckoutForm rooms={rooms} initialRoomSlug={initialRoomSlug} initialPromotionCode={initialPromotionCode} />}           
 
         </div>
     );

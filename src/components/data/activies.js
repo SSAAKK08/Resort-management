@@ -1,6 +1,7 @@
-
-
-
+import zipLine from "@/assets/Activites/zipLine.png";
+import swimmingPool from "@/assets/homeImg/swimmingPool.jpg";
+import scubaDiving from "@/assets/homeImg/ScubaDiving.jpg";
+import fishingBoot from "@/assets/Activites/fishingBoot.jpg";
 
 
 export const activities = [

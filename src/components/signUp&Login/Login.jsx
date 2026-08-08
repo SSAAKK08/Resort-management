@@ -1,10 +1,15 @@
-import signup from "../../assets/LoginSingup/signup.jpg";
+'use client';
+
+import signup from "../../assets/LoginSingup/signUp.jpg";
 import { IoArrowBackSharp } from "react-icons/io5";
-import { NavLink, useNavigate } from "react-router-dom";
+import NavLink from "../navigation/AppLink";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 function Login() {
-  const navigate = useNavigate();
+  const router = useRouter();
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -21,35 +26,31 @@ function Login() {
     });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-
-    const loginUser = users.find(
-      (user) =>
-        user.email === formData.email &&
-        user.password === formData.password
-    );
-
-    if (!loginUser) {
-      alert("Invalid email or password");
-      return;
+    setSubmitting(true);
+    setError("");
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ identifier: formData.email, password: formData.password }),
+      });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || "Invalid email or password.");
+      window.dispatchEvent(new Event("sessionChanged"));
+      router.replace(payload.user?.role?.type === "admin" ? "/admin" : "/profile");
+      router.refresh();
+    } catch (submitError) {
+      setError(submitError.message);
+    } finally {
+      setSubmitting(false);
     }
-
-    localStorage.setItem("loggedInUser", JSON.stringify(loginUser));
-
-    // Tell the Navbar that the login status has changed.
-    window.dispatchEvent(new Event("loginStatusChanged"));
-
-    alert("Login successful");
-
-    navigate("/");
   }
 
   return (
     <div className="bg-cover bg-no-repeat bg-center h-screen overflow-hidden fixed inset-0 justify-center items-center flex"
-      style={{ backgroundImage: `url(${signup})` }}
+      style={{ backgroundImage: `url(${signup.src})` }}
     >
       <NavLink to="/">
         <IoArrowBackSharp className="text-white size-8 top-5 left-5 absolute" />
@@ -93,10 +94,12 @@ function Login() {
           <a href="#" className="text-primary-Blue hover:underline text-sm"> Forgot password</a>
         </div>
 
-        <button
+        {error && <p className="mb-3 text-sm text-red-600" role="alert">{error}</p>}
+
+        <button disabled={submitting}
           type="submit"
           className="text-white bg-primary-Blue w-full rounded-md hover:scale-105 mb-7 font-medium text-sm px-4 py-2.5"
-        >Submit
+        >{submitting ? "Signing in..." : "Submit"}
         </button>
       </form>
     </div>

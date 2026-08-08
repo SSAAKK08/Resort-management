@@ -4,6 +4,7 @@ import room3 from "../../assets/booking/room3.jpg";
 import room4 from "../../assets/booking/room4.jpg";
 import room5 from "../../assets/booking/room5.jpg";
 import room6 from "../../assets/homeImg/room3.jpg";
+    
 // import { IoIosWifi } from "react-icons/io";
 // import { MdOutlinePool } from "react-icons/md";
 

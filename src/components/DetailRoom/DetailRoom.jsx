@@ -1,10 +1,12 @@
-import { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+'use client';
 
-import Navbar from "../hearder&footer/Navbar";
-import Footer from "../hearder&footer/Footer";
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import Link from "../navigation/AppLink";
+
 
 import { cardData } from "../data/dataBooking";
+import { normalizeRoom } from "../../lib/catalog";
 
 import {
     FaStar,
@@ -19,17 +21,41 @@ import { MdOutlineCropSquare } from "react-icons/md";
 
 function DetailRoom() {
     const { id } = useParams();
-    const navigate = useNavigate();
+    const router = useRouter();
 
-    const room = cardData.find(
-        (roomItem) => roomItem.id === Number(id)
-    );
+    const [room, setRoom] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [loadError, setLoadError] = useState("");
+
+    useEffect(() => {
+        let active = true;
+        fetch(`/api/rooms/${encodeURIComponent(id)}`, { cache: "no-store" })
+            .then(async (response) => {
+                const payload = await response.json();
+                if (!response.ok) throw new Error(payload.error || "Unable to load this room.");
+                if (active) setRoom(normalizeRoom(payload.data));
+            })
+            .catch((requestError) => {
+                if (!active) return;
+                const fallback = cardData.find((item) => {
+                    const legacySlug = item.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+                    return item.id === Number(id) || legacySlug === id;
+                });
+                setLoadError(requestError.message);
+                if (fallback) setRoom(normalizeRoom({ ...fallback, slug: id }));
+            })
+            .finally(() => active && setLoading(false));
+        return () => { active = false; };
+    }, [id]);
 
     const [bookingData, setBookingData] = useState({
         checkIn: "",
         checkOut: "",
-        guests: "2 Adults",
+        guests: 1,
+        specialRequest: "",
     });
+    const [bookingMessage, setBookingMessage] = useState("");
+    const [booking, setBooking] = useState(false);
 
     function handleChange(event) {
         const { name, value } = event.target;
@@ -40,50 +66,42 @@ function DetailRoom() {
         });
     }
 
-    function handleBooking() {
-        const loggedInUser = JSON.parse(
-            localStorage.getItem("loggedInUser")
-        );
-
-        if (!loggedInUser) {
-            alert("Please login first before booking a room.");
-            navigate("/login");
-            return;
+    async function handleBooking() {
+        setBooking(true);
+        setBookingMessage("");
+        try {
+            const response = await fetch("/api/bookings", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    roomDocumentId: room.documentId,
+                    checkIn: bookingData.checkIn,
+                    checkOut: bookingData.checkOut,
+                    numberOfGuests: Number(bookingData.guests),
+                    specialRequest: bookingData.specialRequest,
+                }),
+            });
+            const payload = await response.json();
+            if (response.status === 401) {
+                router.push(`/login?next=/rooms/${room.slug}`);
+                return;
+            }
+            if (!response.ok) throw new Error(payload.error || "Booking failed.");
+            router.push(`/my-receipts/${payload.data.receiptNumber}`);
+        } catch (error) {
+            setBookingMessage(error.message);
+        } finally {
+            setBooking(false);
         }
+    }
 
-        if (!bookingData.checkIn || !bookingData.checkOut) {
-            alert("Please select the check-in and check-out dates.");
-            return;
-        }
-
-        const bookings =
-            JSON.parse(localStorage.getItem("roomBookings")) || [];
-
-        const newBooking = {
-            id: Date.now(),
-            roomId: room.id,
-            roomTitle: room.title,
-            roomImage: room.image,
-            price: room.price,
-            checkIn: bookingData.checkIn,
-            checkOut: bookingData.checkOut,
-            guests: bookingData.guests,
-            userEmail: loggedInUser.email,
-        };
-
-        localStorage.setItem(
-            "roomBookings",
-            JSON.stringify([...bookings, newBooking])
-        );
-
-        alert(`${room.title} booked successfully.`);
+    if (loading) {
+        return <div className="min-h-screen bg-gray-50"><div className="min-h-[70vh] animate-pulse bg-gray-100" /></div>;
     }
 
     if (!room) {
         return (
             <div className="min-h-screen bg-gray-50">
-                <Navbar />
-
                 <div className="min-h-[70vh] flex flex-col items-center justify-center px-5">
                     <h1 className="text-4xl font-bold text-gray-800">
                         Room not found
@@ -101,16 +119,15 @@ function DetailRoom() {
                     </Link>
                 </div>
 
-                <Footer />
             </div>
         );
     }
 
     return (
         <div className="min-h-screen bg-[#f6f9fd]">
-            <Navbar />
-
             <main className="lg:px-16 md:px-8 px-4 lg:pt-32 pt-24 pb-20">
+
+                {loadError && <p className="mb-6 rounded-xl bg-amber-50 p-4 text-sm text-amber-800" role="status">{loadError} The preserved migration copy is shown where available.</p>}
 
                 {/* Back button */}
                 <Link
@@ -294,31 +311,32 @@ function DetailRoom() {
                                     onChange={handleChange}
                                     className="w-full mt-1 outline-none bg-white"
                                 >
-                                    <option value="1 Adult">1 Adult</option>
-                                    <option value="2 Adults">2 Adults</option>
-                                    <option value="3 Adults">3 Adults</option>
-                                    <option value="4 Adults">4 Adults</option>
+                                    {Array.from({ length: room.maximumGuests }, (_, index) => index + 1).map((count) => (
+                                        <option key={count} value={count}>{count} {count === 1 ? "Guest" : "Guests"}</option>
+                                    ))}
                                 </select>
                             </div>
+
+                            <textarea name="specialRequest" value={bookingData.specialRequest} onChange={handleChange} placeholder="Special request (optional)" className="mt-4 w-full rounded-xl border border-gray-300 p-3" rows="3" />
 
                             <button
                                 type="button"
                                 onClick={handleBooking}
+                                disabled={booking}
                                 className="w-full bg-primary-Blue text-white py-3 rounded-xl font-semibold mt-5 cursor-pointer hover:opacity-90 transition"
                             >
-                                Book This Room
+                                {booking ? "Processing mock payment..." : "Book & Pay (Mock)"}
                             </button>
 
+                            {bookingMessage && <p className="mt-3 text-sm text-red-600" role="alert">{bookingMessage}</p>}
                             <p className="text-center text-xs text-gray-500 mt-3">
-                                No immediate charge. Free cancellation until
-                                48 hours before arrival.
+                                University project mock payment. No real card or bank gateway is connected.
                             </p>
                         </div>
                     </aside>
                 </section>
             </main>
 
-            <Footer />
         </div>
     );
 }

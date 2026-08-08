@@ -1,10 +1,15 @@
-import signup from "../../assets/LoginSingup/signup.jpg";
+'use client';
+
+import signup from "../../assets/LoginSingup/signUp.jpg";
 import { IoArrowBackSharp } from "react-icons/io5";
-import { NavLink, useNavigate } from "react-router-dom";
+import NavLink from "../navigation/AppLink";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 function SignUp() {
-  const navigate = useNavigate();
+  const router = useRouter();
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -26,50 +31,38 @@ function SignUp() {
   }
 
   // Used this because don't want the brower refesh. why ? when refresh all code will be empty so we can't get data
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Password and Confirm Password do not match");
+      setError("Password and Confirm Password do not match");
       return;
     }
 
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-
-    const emailExists = users.find(
-      (user) => user.email === formData.email
-    );
-
-    if (emailExists) {
-      alert("This email already exists");
-      return;
+    setSubmitting(true);
+    setError("");
+    try {
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || "Unable to create your account.");
+      window.dispatchEvent(new Event("sessionChanged"));
+      router.replace("/profile");
+      router.refresh();
+    } catch (submitError) {
+      setError(submitError.message);
+    } finally {
+      setSubmitting(false);
     }
-
-    const newUser = {
-      id: Date.now(),
-      fullName: formData.fullName,
-      email: formData.email,
-      phone: formData.phone,
-      password: formData.password,
-    };
-
-    users.push(newUser);
-
-    console.log(users);
-    console.log(JSON.stringify(users, null, 2));
-
-
-    localStorage.setItem("users", JSON.stringify(users));
-
-    alert("Register successful");
-
-    navigate("/login");
   }
 
   return (
     <div
       className="bg-cover bg-no-repeat bg-center h-screen overflow-hidden fixed inset-0 justify-center items-center flex"
-      style={{ backgroundImage: `url(${signup})` }}
+      style={{ backgroundImage: `url(${signup.src})` }}
     >
       <NavLink to="/">
         <IoArrowBackSharp className="text-white size-8 top-5 left-5 absolute" />
@@ -157,9 +150,11 @@ function SignUp() {
 
         </div>
 
-        <button type="submit"
+        {error && <p className="mb-3 text-sm text-red-600" role="alert">{error}</p>}
+
+        <button type="submit" disabled={submitting}
           className="text-white bg-primary-Blue w-full rounded-md hover:scale-105 mb-7 font-medium text-sm px-4 py-2.5" >
-          Submit
+          {submitting ? "Creating account..." : "Submit"}
         </button>
       </form>
     </div>

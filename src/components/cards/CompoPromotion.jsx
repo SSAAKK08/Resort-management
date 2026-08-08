@@ -3,7 +3,7 @@ function CompoPromotion({ id, icon, title, description }) {
     <div className="border w-40 h-36 p-3 rounded-lg lg:mt-12 mt-6 lg:mb-20 col-span-6 mb-4" key={id}>
       <div className="text-2xl mb-2 text-primary-Blue">{icon}</div>
       <h3 className="text-lg font-semibold">{title}</h3>
-      <p className="text-sm line-clamp-3 ">{description}</p>
+      <p className="text-sm line-clamp-3">{description}</p>
     </div>
   );
 }

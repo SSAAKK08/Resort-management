@@ -2,6 +2,24 @@
 @import "flowbite-react/plugin/tailwindcss";
 @source "../.flowbite-react/class-list.json";
 
+@font-face {
+    font-family: "Khmer OS Siemreap";
+    src: url("/fonts/KhmerOSSiemreap-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Khmer OS Siemreap";
+    src: url("/fonts/KhmerOSSiemreap-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme{
 
     --color-primary-Blue: var(--primary1);
@@ -20,7 +38,156 @@
     --secondary-title: #181C20;
     --accent-text:#f2f2f2;
     --background: #F6F9FF;
-    --bgCard: #EBEEF4;
+    --bgcard: #EBEEF4;
     --bgEggColor: #EDDDC9;
+    --surface: #ffffff;
+    --surface-muted: #f1f5f9;
+    --input-background: #ffffff;
+    --border-color: #e2e8f0;
 
+}
+
+.dark {
+    color-scheme: dark;
+    --primary1: #38bdf8;
+    --secondary-text: #cbd5e1;
+    --secondary-title: #f8fafc;
+    --accent-text: #111827;
+    --background: #020617;
+    --bgcard: #172033;
+    --bgEggColor: #3b3026;
+    --surface: #0f172a;
+    --surface-muted: #172033;
+    --input-background: #0f172a;
+    --border-color: #334155;
+}
+
+:root {
+    color-scheme: light;
+}
+
+html {
+    background: var(--background);
+}
+
+body {
+    min-height: 100vh;
+    background: var(--background);
+    color: var(--secondary-title);
+    transition: background-color 180ms ease, color 180ms ease;
+}
+
+.font-english {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.font-khmer {
+    font-family: "Khmer OS Siemreap", "Noto Sans Khmer", "Khmer UI", Arial, sans-serif;
+    line-height: 1.75;
+}
+
+.font-khmer button,
+.font-khmer input,
+.font-khmer select,
+.font-khmer textarea {
+    font-family: inherit;
+    line-height: 1.65;
+}
+
+input,
+textarea,
+select {
+    color: var(--secondary-title);
+}
+
+.dark input,
+.dark textarea,
+.dark select {
+    border-color: #475569;
+    background-color: #0f172a;
+    color: #f8fafc;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+    color: #94a3b8;
+}
+
+/* Compatibility layer for existing resort components while each screen keeps
+   its explicit semantic dark variants. These selectors also cover content
+   returned by older Strapi-driven components and third-party modal markup. */
+.dark .bg-white { background-color: #0f172a; }
+.dark .bg-slate-50,
+.dark .bg-slate-100 { background-color: #020617; }
+.dark .bg-slate-200 { background-color: #1e293b; }
+.dark .text-slate-900,
+.dark .text-gray-900,
+.dark .text-black { color: #f8fafc; }
+.dark .text-slate-600,
+.dark .text-gray-600,
+.dark .text-gray-700 { color: #cbd5e1; }
+.dark .text-slate-500,
+.dark .text-gray-500 { color: #94a3b8; }
+.dark .border,
+.dark .border-slate-200,
+.dark .border-gray-200,
+.dark .border-default { border-color: #334155; }
+.dark .bg-red-50 { background-color: rgb(69 10 10 / 0.45); }
+.dark .text-red-700 { color: #fca5a5; }
+.dark .bg-amber-50 { background-color: rgb(69 26 3 / 0.4); }
+.dark .text-amber-800,
+.dark .text-amber-900 { color: #fde68a; }
+.dark .bg-blue-50,
+.dark .bg-cyan-50 { background-color: rgb(8 47 73 / 0.45); }
+.dark .text-blue-900 { color: #bae6fd; }
+
+table,
+th,
+td,
+dialog,
+[role="dialog"] {
+    border-color: var(--border-color);
+}
+
+/* Compatibility layer for existing resort components while each screen keeps
+   its explicit semantic dark variants. These selectors also cover content
+   returned by older Strapi-driven components and third-party modal markup. */
+.dark .bg-white { background-color: #0f172a; }
+.dark .bg-slate-50,
+.dark .bg-slate-100 { background-color: #020617; }
+.dark .bg-slate-200 { background-color: #1e293b; }
+.dark .text-slate-900,
+.dark .text-gray-900,
+.dark .text-black { color: #f8fafc; }
+.dark .text-slate-600,
+.dark .text-gray-600,
+.dark .text-gray-700 { color: #cbd5e1; }
+.dark .text-slate-500,
+.dark .text-gray-500 { color: #94a3b8; }
+.dark .border,
+.dark .border-slate-200,
+.dark .border-gray-200,
+.dark .border-default { border-color: #334155; }
+.dark .bg-red-50 { background-color: rgb(69 10 10 / 0.45); }
+.dark .text-red-700 { color: #fca5a5; }
+.dark .bg-amber-50 { background-color: rgb(69 26 3 / 0.4); }
+.dark .text-amber-800,
+.dark .text-amber-900 { color: #fde68a; }
+.dark .bg-blue-50,
+.dark .bg-cyan-50 { background-color: rgb(8 47 73 / 0.45); }
+.dark .text-blue-900 { color: #bae6fd; }
+
+table,
+th,
+td,
+dialog,
+[role="dialog"] {
+    border-color: var(--border-color);
+}
+
+@media print {
+    body { background: white !important; }
+    body, body * { color-scheme: light; }
+    nav, footer, .receipt-actions { display: none !important; }
+    .receipt-print { box-shadow: none !important; margin: 0 !important; padding: 0 !important; }
 }

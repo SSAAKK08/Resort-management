@@ -1,5 +1,7 @@
 
-import React, { useState } from "react";
+'use client';
+
+import { useState } from "react";
 import { foodData } from "../data/foodData";
 
 const FoodDetail = () => {
