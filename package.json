@@ -7,7 +7,7 @@
     "dev": "next dev --webpack",
     "build": "next build",
     "start": "next start",
-    "test": "node --test src/lib/dashboard-data.test.js",
+    "test": "node --test src/lib/dashboard-data.test.js src/lib/chatbot.test.js",
     "lint": "eslint .",
     "legacy:dev": "vite",
     "legacy:build": "vite build",

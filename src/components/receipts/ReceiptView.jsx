@@ -43,7 +43,7 @@ export default function ReceiptView({ receiptNumber }) {
       <header className="flex flex-wrap items-start justify-between gap-5 border-b pb-6">
         <div>
           <p className="text-sm uppercase tracking-widest text-primary-Blue">
-            Official project receipt
+            Official Sea Breeze receipt
           </p>
           <h1 className="mt-2 text-3xl font-bold">
             {resort.resortName || "Sea Breeze Resort"}

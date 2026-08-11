@@ -40,9 +40,18 @@ export async function strapiRequest(path, options = {}) {
     headers = {},
     cache = 'no-store',
     next,
+    signal,
+    timeoutMs = 0,
   } = options;
   const isFormData = body instanceof FormData;
   const requestHeaders = { Accept: 'application/json', ...headers };
+  const timeoutController = timeoutMs > 0 ? new AbortController() : null;
+  const timeoutId = timeoutController
+    ? setTimeout(() => timeoutController.abort(), timeoutMs)
+    : null;
+  const requestSignal = timeoutController && signal
+    ? AbortSignal.any([timeoutController.signal, signal])
+    : timeoutController?.signal || signal;
 
   if (token) requestHeaders.Authorization = `Bearer ${token}`;
   if (body !== undefined && !isFormData) requestHeaders['Content-Type'] = 'application/json';
@@ -55,13 +64,19 @@ export async function strapiRequest(path, options = {}) {
       body: body === undefined ? undefined : isFormData ? body : JSON.stringify(body),
       cache,
       next,
+      signal: requestSignal,
     });
   } catch (error) {
+    const timedOut = error?.name === 'AbortError' && timeoutController?.signal.aborted;
     throw new StrapiError(
-      'The resort service is unavailable. Confirm that Strapi is running on port 1337.',
-      503,
+      timedOut
+        ? 'The resort service took too long to respond.'
+        : 'The resort service is unavailable. Confirm that Strapi is running on port 1337.',
+      timedOut ? 504 : 503,
       error.message
     );
+  } finally {
+    if (timeoutId) clearTimeout(timeoutId);
   }
 
   const payload = parseResponseBody(await response.text());

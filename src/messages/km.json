@@ -306,5 +306,69 @@
   },
   "Forms": {
     "fullName": "ឈ្មោះពេញ", "email": "អ៊ីមែល", "phone": "លេខទូរស័ព្ទ", "subject": "ប្រធានបទ", "message": "សារ", "sending": "កំពុងផ្ញើ...", "contact": "ទាក់ទងអ្នកអភិវឌ្ឍន៍", "reserveTable": "កក់តុ", "guest": "ចំនួនភ្ញៀវ", "time": "ម៉ោង", "request": "សំណើពិសេស", "room": "បន្ទប់", "checkIn": "ថ្ងៃចូលស្នាក់", "checkOut": "ថ្ងៃចាកចេញ", "address": "អាសយដ្ឋាន", "promotionCode": "កូដប្រូម៉ូសិន", "apply": "ប្រើ", "bookStay": "កក់ការស្នាក់នៅ", "stayDetails": "ព័ត៌មានការស្នាក់នៅ", "customerInfo": "ព័ត៌មានអតិថិជន", "submitBooking": "បញ្ជាក់ការកក់", "restaurantCheckout": "ទូទាត់ការបញ្ជាទិញអាហារ", "emptyOrder": "ការបញ្ជាទិញអាហាររបស់អ្នកនៅទទេ។", "quantity": "ចំនួន", "checkout": "ទូទាត់", "description": "ការពិពណ៌នា", "slug": "Slug", "roomNumber": "លេខបន្ទប់", "size": "ទំហំ", "bed": "ប្រភេទគ្រែ", "maximumGuests": "ចំនួនភ្ញៀវអតិបរមា", "preparation": "ពេលរៀបចំ (នាទី)", "mainImage": "រូបភាពចម្បង", "gallery": "រូបភាពបន្ថែម", "prepareBooking": "អ្នកអាចរៀបចំការកក់ឥឡូវនេះ ប៉ុន្តែអ្នកត្រូវ", "loginAction": "ចូលគណនី", "beforeSubmitting": "មុនពេលបញ្ជូន។", "loginRequired": "សូមចូលគណនីមុនពេលបញ្ចប់ការកក់។", "signedInSyncPending": "អ្នកបានចូលគណនីជាមួយ Clerk ប៉ុន្តែគណនីរមណីយដ្ឋានរបស់អ្នកមិនទាន់រួចរាល់។", "resortSessionUnavailable": "សេវាគណនីរមណីយដ្ឋានមិនអាចធ្វើសមកាលកម្មវគ្គរបស់អ្នកបានទេ។ សូមពិនិត្យថា Strapi កំពុងដំណើរការ ហើយកម្មវិធីទាំងពីរប្រើលេខសម្ងាត់ធ្វើសមកាលកម្មដូចគ្នា។", "retrySession": "ព្យាយាមភ្ជាប់គណនីម្ដងទៀត", "emailAfterLogin": "មានបន្ទាប់ពីចូលគណនី"
+  },
+  "Chatbot": {
+    "assistantName": "ជំនួយការ Sea Breeze",
+    "online": "នៅលើបណ្ដាញ",
+    "open": "បើកជំនួយការរមណីយដ្ឋាន",
+    "close": "បិទការជជែក",
+    "minimize": "បង្រួមការជជែក",
+    "restore": "បើកការជជែកឡើងវិញ",
+    "typing": "ជំនួយការកំពុងវាយ",
+    "welcome": "សួស្តី! ខ្ញុំជាជំនួយការរបស់រមណីយដ្ឋាន Sea Breeze។ អ្នកអាចសួរខ្ញុំអំពីបន្ទប់ អាហារ សកម្មភាព ប្រូម៉ូសិន ឬព័ត៌មានរមណីយដ្ឋាន។",
+    "messageLabel": "សារ",
+    "placeholder": "សួរអំពីរមណីយដ្ឋាន...",
+    "send": "ផ្ញើសារ",
+    "characterCount": "{count}/{max}",
+    "quickReplies": {
+      "roomAvailability": "តើមានបន្ទប់ណាខ្លះទំនេរ?",
+      "roomDetails": "តម្លៃ និងបរិក្ខារបន្ទប់",
+      "food": "តើមានអាហារអ្វីខ្លះ?",
+      "activities": "តើមានសកម្មភាពអ្វីខ្លះ?",
+      "promotions": "បង្ហាញប្រូម៉ូសិនកំពុងដំណើរការ",
+      "policies": "តើគោលការណ៍ស្នាក់នៅមានអ្វីខ្លះ?"
+    },
+    "actions": {
+      "booking": "ទៅកាន់ការកក់",
+      "rooms": "មើលបន្ទប់",
+      "restaurant": "មើលភោជនីយដ្ឋាន",
+      "activities": "មើលសកម្មភាព",
+      "promotions": "មើលប្រូម៉ូសិន",
+      "contact": "ទាក់ទងរមណីយដ្ឋាន"
+    },
+    "errors": {
+      "rateLimited": "អ្នកកំពុងផ្ញើសារលឿនពេក។ សូមរង់ចាំបន្តិច រួចសាកល្បងម្ដងទៀត។",
+      "timeout": "សេវារមណីយដ្ឋានកំពុងឆ្លើយតបយឺតជាងធម្មតា។ សូមសាកល្បងម្ដងទៀត។",
+      "unavailable": "សូមអភ័យទោស ខ្ញុំមិនអាចភ្ជាប់ទៅសេវារមណីយដ្ឋានបានទេ។ សូមសាកល្បងម្ដងទៀត ឬទាក់ទងបុគ្គលិករបស់យើង។"
+    },
+    "responses": {
+      "greeting": "សួស្តី! តើខ្ញុំអាចជួយអ្វីខ្លះសម្រាប់ការមកស្នាក់នៅរមណីយដ្ឋាន Sea Breeze របស់អ្នក?",
+      "insufficient": "ខ្ញុំមិនទាន់មានព័ត៌មានគ្រប់គ្រាន់អំពីរឿងនោះទេ។ សូមទាក់ទងបុគ្គលិករមណីយដ្ឋានរបស់យើង។",
+      "serviceError": "ខ្ញុំកំពុងមានបញ្ហាក្នុងការទាញយកព័ត៌មានរមណីយដ្ឋានបច្ចុប្បន្ន។ សូមសាកល្បងម្ដងទៀត ឬទាក់ទងបុគ្គលិករបស់យើង។",
+      "notListed": "មិនបានបញ្ជាក់",
+      "yes": "មាន",
+      "free": "ឥតគិតថ្លៃ",
+      "roomsAvailableIntro": "បន្ទប់ទាំងនេះត្រូវបានសម្គាល់ថាទំនេរនៅក្នុងប្រព័ន្ធរមណីយដ្ឋានបច្ចុប្បន្ន៖",
+      "roomsIntro": "នេះជាព័ត៌មានបន្ទប់បច្ចុប្បន្នពីប្រព័ន្ធរមណីយដ្ឋាន៖",
+      "roomAvailableLine": "• {name}: {price} · សម្រាប់ភ្ញៀវអតិបរមា {guests} នាក់",
+      "roomDetailLine": "• {name}: {price} · ភ្ញៀវអតិបរមា {guests} នាក់ · Wi-Fi: {wifi} · បរិក្ខារ: {amenities}",
+      "foodIntro": "នេះជាព័ត៌មានភោជនីយដ្ឋានបច្ចុប្បន្ន៖",
+      "foodLine": "• {name}: {price}",
+      "restaurantServicesLine": "• សេវាកម្ម: {services}",
+      "restaurantHoursLine": "• ម៉ោងបើក: {hours}",
+      "activitiesIntro": "សកម្មភាពរមណីយដ្ឋានទាំងនេះមាននៅពេលបច្ចុប្បន្ន៖",
+      "activityLine": "• {name}: {duration} · {location} · {price}",
+      "promotionsIntro": "ប្រូម៉ូសិនទាំងនេះកំពុងដំណើរការ៖",
+      "percentageDiscount": "បញ្ចុះតម្លៃ {value}%",
+      "fixedDiscount": "បញ្ចុះតម្លៃ {value}",
+      "promotionLine": "• {name}: {discount} · កូដ {code} · ផុតកំណត់ {endDate}",
+      "checkInOut": "ចូលស្នាក់: {checkIn} · ចាកចេញ: {checkOut}",
+      "paymentMethods": "វិធីទូទាត់: {methods}",
+      "location": "អាសយដ្ឋានរមណីយដ្ឋាន: {address}",
+      "contact": "ទំនាក់ទំនងរមណីយដ្ឋាន: {details}",
+      "policiesIntro": "នេះជាព័ត៌មានគោលការណ៍ស្នាក់នៅដែលរមណីយដ្ឋានបានបញ្ជាក់បច្ចុប្បន្ន៖",
+      "bookingPolicyLine": "គោលការណ៍កក់: {policy}",
+      "cancellationPolicyLine": "គោលការណ៍លុបចោល: {policy}"
+    }
   }
 }
