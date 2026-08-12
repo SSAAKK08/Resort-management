@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import NavLink from "../navigation/AppLink"
-import profile from "../../assets/profile.png"
+import profile from "../../assets/profile.jpg"
 import Button from "../button/Button"
 import logo from "@/assets/logo.png"
 import Image from "next/image";
