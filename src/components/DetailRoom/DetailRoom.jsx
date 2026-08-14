@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "../navigation/AppLink";
-
-
 import { cardData } from "../data/dataBooking";
 import { normalizeRoom } from "../../lib/catalog";
 

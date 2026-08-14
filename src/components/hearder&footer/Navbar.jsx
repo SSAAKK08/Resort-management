@@ -49,6 +49,7 @@ function ClerkUserMenu({ isAdmin, t }) {
         <UserButton.Link label={t("orders")} labelIcon={<FiShoppingBag />} href="/my-orders" />
         <UserButton.Link label={t("receipts")} labelIcon={<FiFileText />} href="/my-receipts" />
         {isAdmin && <UserButton.Link label={t("admin")} labelIcon={<FiShield />} href="/admin" />}
+        {/* sign up it didn't need the "href" becasue it was validation by clerk */}
         <UserButton.Action label="signOut" />
       </UserButton.MenuItems>
     </UserButton>

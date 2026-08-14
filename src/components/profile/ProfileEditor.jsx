@@ -64,6 +64,7 @@ export default function ProfileEditor() {
     return () => controller.abort();
   }, [requestNumber, t]);
 
+  // block of updated data to success or not
   async function save(event) {
     event.preventDefault();
     setSaving(true);
@@ -194,6 +195,8 @@ export default function ProfileEditor() {
           className="mt-2 w-full rounded-lg border border-slate-300 bg-white p-3 text-slate-900 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
         />
       </label>
+
+      {/* update the status color with message */}
       {message.text && (
         <p
           className={
@@ -201,18 +204,19 @@ export default function ProfileEditor() {
               ? "text-sm text-red-600 dark:text-red-400"
               : "text-sm text-emerald-700 dark:text-emerald-400"
           }
-          role="status"
-        >
+          role="status">
           {message.text}
         </p>
       )}
       <div className="flex flex-wrap gap-3">
+        {/* save button  */}
         <button
           disabled={saving}
           className="rounded-xl bg-primary-Blue px-6 py-3 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
         >
           {saving ? common("saving") : t("save")}
         </button>
+        {/* cancel button */}
         <button
           type="button"
           onClick={() => router.push("/profile")}

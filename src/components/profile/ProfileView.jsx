@@ -70,7 +70,7 @@ export default function ProfileView() {
 
   const user = data?.user || null;
   const profile = data?.profile || null;
-  if (!user || !profile) {
+  if (!user || !profile){
     return (
       <section
         className="rounded-2xl border border-amber-200 bg-amber-50 p-8 text-amber-950 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-100"
@@ -94,18 +94,16 @@ export default function ProfileView() {
     [common("phone"), profile.phone],
     [t("address"), profile.address],
     [t("birthDate"), profile.dateOfBirth],
+    // when it become 'defaultRole' it was the user. 
     [t("role"), user.role?.name || t("defaultRole")],
     [t("bio"), profile.bio],
   ];
 
   return (
     <section className="rounded-2xl bg-white p-8 shadow-sm dark:bg-slate-900">
-      <p className="text-sm font-semibold uppercase tracking-widest text-primary-Blue">
-        {t("resortProfile")}
-      </p>
-      <h1 className="mt-2 text-3xl font-bold">
-        {profile.fullName || user.username || t("guest")}
-      </h1>
+      <p className="text-sm font-semibold uppercase tracking-widest text-primary-Blue">  {t("resortProfile")} </p>
+      <h1 className="mt-2 text-3xl font-bold"> {profile.fullName || user.username || t("guest")} </h1>
+      
       <dl className="mt-7 grid gap-5 sm:grid-cols-2">
         {fields.map(([label, value]) => (
           <div key={label}>

@@ -1,5 +1,7 @@
 "use client";
 
+// It's working for saved the three kind different receipt : booking, orders and recepit(booking and orders foods)
+
 import { useEffect, useState } from "react";
 import AppLink from "@/components/navigation/AppLink";
 import { useTranslations } from "next-intl";
@@ -17,6 +19,8 @@ export default function UserHistory({ type }) {
   const config = {
     ...baseConfig,
     title:
+
+    // part they check the conditions 
       type === "bookings"
         ? nav("bookings")
         : type === "orders"

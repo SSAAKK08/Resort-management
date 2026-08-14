@@ -43,22 +43,17 @@ export default function Promotion() {
     <div className="bg-slate-50 dark:bg-slate-950">
       <header
         className="relative flex min-h-[70vh] items-end overflow-hidden bg-cover bg-center"
-        style={{ backgroundImage: `url(${banner.src})` }}
-      >
+        style={{ backgroundImage: `url(${banner.src})` }}>
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/25 to-transparent" />
         <div className="relative mx-3 max-w-3xl pb-14 text-white lg:mx-16">
-          <p className="font-semibold uppercase tracking-[0.25em] text-cyan-200">
-            {t("eyebrow")}
-          </p>
+          <p className="font-semibold uppercase tracking-[0.25em] text-cyan-200">{t("eyebrow")} </p>
           <h1 className="mt-3 text-4xl font-bold md:text-6xl">{t("title")}</h1>
           <p className="mt-4 text-lg text-white/80">{t("intro")}</p>
         </div>
       </header>
       <main className="mx-3 py-14 lg:mx-16">
         <div className="mb-8">
-          <p className="font-semibold uppercase tracking-widest text-primary-Blue">
-            {t("section")}
-          </p>
+          <p className="font-semibold uppercase tracking-widest text-primary-Blue"> {t("section")}</p>
           <h2 className="mt-2 text-3xl font-bold">{t("available")}</h2>
         </div>
 
